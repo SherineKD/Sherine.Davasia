@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherine K Davasia - Web Developer & Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f7ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f8f7ff;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            transform: translateY(0);
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5e35b1;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            color: #4527a0;
+        }
+        
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            color: #5e35b1;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -0.3rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #5e35b1;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 1.5rem;
+            height: 1.1rem;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Hero Section - Updated Layout */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding-top: 8rem;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .profile-image-container {
+            flex: 0 0 300px;
+            position: relative;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: auto;
+            border-radius: 1.25rem;
+            object-fit: cover;
+            border: 0.3rem solid white;
+            box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #5e35b1;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: #f0e8ff;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.625rem);
+            font-weight: 700;
+            color: #5e35b1;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #5e35b1, #b39ddb);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        section.visible .section-title::after {
+            transform: scaleX(1);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .about-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        section.visible .about-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about-card:nth-child(1) { transition-delay: 0.1s; }
+        .about-card:nth-child(2) { transition-delay: 0.2s; }
+        .about-card:nth-child(3) { transition-delay: 0.3s; }
+        .about-card:nth-child(4) { transition-delay: 0.4s; }
+        
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .about-card h3 {
+            color: #5e35b1;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .about-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 2rem;
+            height: 2px;
+            background-color: #b39ddb;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .skill-tag {
+            background-color: #e1bee7;
+            color: #5e35b1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background-color: #5e35b1;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .experience-item {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+        
+        section.visible .experience-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .experience-item:nth-child(1) { transition-delay: 0.1s; }
+        .experience-item:nth-child(2) { transition-delay: 0.2s; }
+        .experience-item:nth-child(3) { transition-delay: 0.3s; }
+        
+        .experience-item h4 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+        
+        .experience-item .date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            background-color: #f0e8ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.3rem;
+        }
+        
+        .experience-item ul {
+            padding-left: 1.2rem;
+        }
+        
+        .experience-item li {
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.2rem;
+        }
+        
+        .experience-item li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #5e35b1;
+        }
+        
+        /* Enhanced Portfolio Styles */
+        .portfolio-gallery {
+            background-color: #f8f7ff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-buttons button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            background-color: #5e35b1;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .filter-buttons button:hover,
+        .filter-buttons button.active {
+            background-color: #4527a0;
+        }
+
+        .masonry {
+            column-count: 6;
+            column-gap: 0px;
+        }
+
+        .item {
+            margin-bottom: 0px;
+            break-inside: avoid;
+        }
+
+        .item img {
+            width: 100%;
+            border-radius: 0px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: none;
+        }
+
+        .item img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 30px rgba(1, 1, 1, 1);
+        }
+
+        .caption {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .masonry {
+                column-count: 1;
+            }
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .lightbox-controls {
+            margin-top: 15px;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: #f8f7ff;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        section.visible .contact-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-card:nth-child(1) { transition-delay: 0.1s; }
+        .contact-card:nth-child(2) { transition-delay: 0.2s; }
+        .contact-card:nth-child(3) { transition-delay: 0.3s; }
+        .contact-card:nth-child(4) { transition-delay: 0.4s; }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .contact-card i {
+            font-size: 1.5rem;
+            color: #5e35b1;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover i {
+            transform: scale(1.2);
+        }
+        
+        .contact-card h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .contact-card p, .contact-card a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-card a:hover {
+            color: #5e35b1;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 0.9rem;
+            box-shadow: 0 0.6rem 1.9rem rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        section.visible .contact-form {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+        
+        section.visible .form-group {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .form-group:nth-child(1) { transition-delay: 0.2s; }
+        .form-group:nth-child(2) { transition-delay: 0.3s; }
+        .form-group:nth-child(3) { transition-delay: 0.4s; }
+        .form-group:nth-child(4) { transition-delay: 0.5s; }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #5e35b1;
+            box-shadow: 0 0 0 2px rgba(94, 53, 177, 0.2);
+        }
+        
+        .submit-btn {
+            background-color: #5e35b1;
+            color: white;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #4527a0;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        
+        /* Form Status Messages */
+        .form-status {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .form-status.success {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        
+        .form-status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #5e35b1;
+            color: white;
+            padding: 3.75rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(94, 53, 177, 0.9), rgba(126, 87, 194, 0.9));
+            z-index: 0;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: white;
+        }
+        
+        .footer-about {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -0.2rem;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-0.3rem);
+        }
+        
+        .social-links a:hover::after {
+            transform: translateY(0);
+        }
+        
+        .copyright {
+            margin-top: 2.5rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background-color: #5e35b1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #4527a0;
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            section {
+                padding: 5rem 1.5rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-image-container {
+                flex: 0 0 auto;
+                margin-bottom: 2rem;
+            }
+            
+            .hero-text {
+                text-align: center;
+            }
+            
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                position: fixed;
+                top: 4.5rem;
+                left: 0;
+                width: 100%;
+                background-color: #f8f7ff;
+                flex-direction: column;
+                align-items: center;
+                padding: 1.5rem 0;
+                gap: 1.2rem;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(0.45rem) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-0.45rem) rotate(-45deg);
+            }
+            
+            .hero {
+                padding-top: 6rem;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            .profile-image-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .social-links a {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+            
+            .back-to-top {
+                width: 2.5rem;
+                height: 2.5rem;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="logo">Sherine K Davasia</div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section - Updated Layout -->
+    <section id="home" class="hero">
+        <div class="section-container">
+            <div class="hero-content">
+                <div class="profile-image-container">
+                    <img src="D:\Sherine.Davasia\images\me.jpg" alt="Sherine K Davasia" class="profile-image">
+                </div>
+                <div class="hero-text">
+                    <h1>Sherine K Davasia</h1>
+                    <h2>Web Developer & Graphic Designer</h2>
+                    <p>Creating innovative digital experiences with clean code and compelling design. Passionate about building user-friendly applications and beautiful interfaces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="section-container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Education</h3>
+                    <div class="experience-item">
+                        <h4>Bachelor of Technology (CS & Engineering)</h4>
+                        <p class="date">Moradabad Institute of Technology | 2020 - Present</p>
+                    </div>
+                    <div class="experience-item">
+                        <h4>Intermediate</h4>
+                        <p class="date">Wilsonia College | 2018</p>
+                    </div>
+                    <div class="experience-item">
+                        <h4>High School</h4>
+                        <p class="date">Wilsonia College | 2016</p>
+                    </div>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Skills</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Canva</span>
+                        <span class="skill-tag">Git/GitHub</span>
+                    </div>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Work Experience</h3>
+                    <div class="experience-item">
+                        <h4>React Developer & Graphic Designer (Intern)</h4>
+                        <p class="date">Softevia LLP | Jul 2023 - Oct 2023</p>
+                        <ul>
+                            <li>Developed React JS web apps with innovative UX</li>
+                            <li>Ensured clean, efficient, maintainable code</li>
+                            <li>Executed high-standard graphics for holistic design</li>
+                            <li>Maintained brand consistency across projects</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-card">
+                    <h3>Certifications</h3>
+                    <ul>
+                        <li>Python Basics - Coursera (Oct 2023)</li>
+                        <li>Generative AI - LinkedIn Learning (Jul 2023)</li>
+                        <li>Software Development - Microsoft (Jul 2023)</li>
+                        <li>CCNAv7: Introduction to Networks - Cisco (Jan 2023)</li>
+                        <li>IELTS - 6.2 Band Score</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery Section -->
+    <section id="portfolio" class="portfolio-gallery">
+        <div class="section-container">
+            <h2 class="section-title">Projects</h2>
+            
+            <div class="filter-buttons">
+	<button class="active" data-filter="all">All Projects</button>
+                <button data-filter="web">Web Development</button>
+                <button data-filter="design">Graphic Design</button>
+                <button data-filter="teaching">Resume Designs</button>
+            </div>
+            
+            <div class="masonry" id="gallery">
+             
+
+  	<!-- Project 8- Instagram Post -->
+                       <div class="item" data-category="design">
+                	       <img src="D:\Sherine.Davasia\images\goodfriday.jpg" >
+                       </div>
+
+	<!-- Project 9- Banner-->
+                       <div class="item" data-category="design">
+                	       <img src="D:\Sherine.Davasia\images\SofteviaBanner.jpg" >
+                       </div>            
+                                                    
+	 <!-- Project 4 - CompanyPortfolio -->
+                       <div class="item" data-category="teaching">
+                	       <img src="D:\Sherine.Davasia\images\DevanshResume.jpg" >                       
+	   </div>
+                              
+	<!-- Project 1 - Warehouse Management System -->
+                       <div class="item" data-category="web">
+                   	       <img src="D:\Sherine.Davasia\images\excelsiorwareousemanagement.jpg" >
+               	   </div>
+                     
+	<!-- Project 6 - Restaurant -->
+               	    <div class="item" data-category="design">
+                            <img src="D:\Sherine.Davasia\images\friendship.jpg" >
+                       </div>
+
+	<!-- Project 10- Banner-->
+            	    <div class="item" data-category="web">
+            	        <img src="D:\Sherine.Davasia\images\luca.jpg" >
+            	    </div>
+
+	<!-- Project 11- Banner-->
+           	     <div class="item" data-category="web">
+           	         <img src="D:\Sherine-Portfolio\images\swot.jpg" >
+            	    </div>
+                <!-- Project 7 - Instagram Post -->
+           	     <div class="item" data-category="design">
+           	         <img src="D:\Sherine.Davasia\images\newyear.jpg" >
+           	     </div>
+	<!-- Project 7 - Instagram Post -->
+          	      <div class="item" data-category="design">
+          	          <img src="D:\Sherine.Davasia\peace.jpg" >
+          	      </div>
+
+	<!-- Project 12- Banner-->
+           	     <div class="item" data-category="teaching">
+           	         <img src="D:\Sherine.Davasia\images\rashid.jpg" >
+           	     </div>
+
+	<!-- Project 12- Banner-->
+          	      <div class="item" data-category="web">
+          	          <img src="D:\Sherine.Davasia\images\syppl.jpg" >
+          	      </div>
+
+	 <!-- Project 5 - Curriculum Vitas -->
+           	     <div class="item" data-category="design">
+             	       <img src="D:\Sherine.Davasia\images\Sweet chilli.jpg" >
+          	      </div>
+
+	<!-- Project 10- Banner-->
+          	      <div class="item" data-category="design">
+           	         <img src="D:\Sherine.Davasia\easter.jpg" >
+          	      </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox container -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Enlarged image" />
+        <div class="lightbox-controls" id="lightbox-caption"></div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fab fa-instagram"></i>
+                    <h3>Instagram</h3>
+                    <a href="https://www.instagram.com/sherine.davasia/" target="_blank" class="instagram-handle">@sherine.davasia</a>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <a href="mailto:sherinedavsia8@gmail.com">sherinedavsia8@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Location</h3>
+                    <p>India</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fab fa-linkedin"></i>
+                    <h3>LinkedIn</h3>
+                    <a href="https://www.linkedin.com/in/skdavasia" target="_blank">linkedin.com/in/skdavasia</a>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div id="formStatus" class="form-status"></div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Sherine K Davasia</h3>
+            <p class="footer-about">Web Developer & Graphic Designer passionate about creating beautiful, functional digital experiences that solve problems and delight users.</p>
+            
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="social-links">
+                <!-- Behance -->
+                <a href="https://www.behance.net/sherinedavasia" target="_blank" aria-label="Behance">
+                    <i class="fab fa-behance"></i>
+                </a>
+                
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/skdavasia" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/sherine.davasia/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                
+                <!-- Twitter -->
+                <a href="https://x.com/SherineDavasia" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2022 Sherine K Davasia. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking a nav link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Header effects on scroll
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            // Header shadow
+            if (currentScroll > 50) {
+                header.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+            }
+            
+            // Hide/show header on scroll direction
+            if (currentScroll <= 0) {
+                header.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !header.classList.contains('hidden')) {
+                header.classList.add('hidden');
+            } else if (currentScroll < lastScroll && header.classList.contains('hidden')) {
+                header.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Scroll animations with Intersection Observer
+        const sections = document.querySelectorAll('section');
+        const backToTop = document.querySelector('.back-to-top');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+        
+        // Back to top button
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                formStatus.textContent = 'Please fill in all fields';
+                formStatus.className = 'form-status error';
+                return;
+            }
+            
+            // Here you would typically send the form data to a server
+            // For demonstration, we'll simulate a successful submission
+            
+            // Simulate form submission (replace with actual AJAX call)
+            setTimeout(() => {
+                formStatus.textContent = 'Message sent successfully! I will get back to you soon.';
+                formStatus.className = 'form-status success';
+                contactForm.reset();
+                
+                // Clear status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.textContent = '';
+                    formStatus.className = 'form-status';
+                }, 5000);
+            }, 1000);
+        });
+        
+        // Responsive adjustments on resize
+        function handleResize() {
+            // Adjust hero section padding based on header height
+            const headerHeight = document.querySelector('header').offsetHeight;
+            document.querySelector('.hero').style.paddingTop = `${headerHeight + 30}px`;
+        }
+        
+        // Initial call and event listener
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        
+        // Initialize animations on load
+        window.addEventListener('load', function() {
+            // Trigger first section animation immediately
+            document.querySelector('section').classList.add('visible');
+            
+            // Handle hash links on page load
+            if (window.location.hash) {
+                const targetElement = document.querySelector(window.location.hash);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+
+        // Enhanced Portfolio Functionality
+        const filterButtons = document.querySelectorAll('.filter-buttons button');
+        const items = document.querySelectorAll('.item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const filter = button.dataset.filter;
+                items.forEach(item => {
+                    item.style.display = (filter === 'all' || item.dataset.category === filter) ? 'block' : 'none';
+                });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const images = document.querySelectorAll('.item img');
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            const img = images[index];
+            lightboxImg.src = img.src;
+            lightboxCaption.textContent = img.alt;
+            lightbox.style.display = 'flex';
+            currentIndex = index;
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % images.length;
+            openLightbox(currentIndex);
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            openLightbox(currentIndex);
+        }
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => openLightbox(index));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.style.display.includes('flex')) return;
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
