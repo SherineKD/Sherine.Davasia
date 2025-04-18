@@ -926,6 +926,52 @@
                 bottom: 1.5rem;
                 right: 1.5rem;
             }
+
+		/* Default desktop layout */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.hero-img img {
+  max-width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1;
+  position: relative;
+}
+
+/* Responsive mobile layout */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-img img {
+    width: 80%;
+    max-width: 250px;
+    position: static;
+    z-index: 0;
+  }
+
+  .hero-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+
         }
     </style>
 </head>
