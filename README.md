@@ -1,7 +1,5 @@
 # Sherine K Davasia - Portfolio Website
 
-![Portfolio Screenshot](screenshot.png)
-
 A responsive portfolio website showcasing my skills, projects, and experience as a Web Developer & Graphic Designer.
 
 ## Features
